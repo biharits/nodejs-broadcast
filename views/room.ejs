@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta https-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    const ROOM_ID = "<%= roomId %>"
+  </script>
+  <script defer src="peerjs/peerjs.js"></script>
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="polyfill.js" defer></script>
+  <script src="script.js" defer></script>
+  <title>WebRTC</title>
+  <style>
+    @-moz-document url-prefix() {
+      html{
+        scrollbar-width: none;
+      }
+    }
+
+    body {
+      margin: 0px;
+      padding: 0px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      overflow-y: scroll;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    
+    #video-grid {
+      height: 100%;
+      max-height: 1080px;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    video {
+      display: grid;
+      object-fit: cover;
+      position: static;
+      height: inherit;
+      max-height: inherit;
+      padding: inherit;
+      margin: inherit;
+    }
+  </style>
+</head>
+<body>
+  <div id="video-grid"></div>
+</body>
+</html>
