@@ -64,17 +64,26 @@ navigator.mediaDevices.getUserMedia(constraints).then(stream => {
   })
 
   socket.on('user-connected', userId => {
-    console.info('User connected: ' + userId)
-    const video = document.createElement('video')
-    video.muted = true
-    myPeer.call(userId, stream)
-    myPeer.on('stream', userVideoStream => {
-      video.srcObject = userVideoStream
-      video.onloadeddata = function(e) {
-        video.play()
-      };
-      peers[userId] = userVideoStream
-    })
+    setTimeout(() => {
+      console.info('User connected: ' + userId)
+      const video = document.createElement('video')
+      video.muted = true
+      myPeer.call(userId, stream)
+      myPeer.on('stream', userVideoStream => {
+        video.srcObject = userVideoStream.applyConstraints({
+                                            video: {
+                                              mandatory: {
+                                                minWidth: 1920,
+                                                maxWidth: 1920
+                                              }
+                                            }
+                                          })
+        video.onloadeddata = function(e) {
+          video.play()
+        };
+        peers[userId] = userVideoStream
+      })
+    }, 1000)
     myPeer.on('close', userVideoStream => {
       video.remove(video, userVideoStream)
     })

@@ -32,20 +32,22 @@
     }
     
     #video-grid {
-      height: 100%;
-      max-height: 1080px;
+      width: 100%;
+      min-width: 1920px;
+      max-width: 1920px;
       padding: 0px;
       margin: 0px;
     }
 
     video {
-      display: grid;
-      object-fit: cover;
-      position: static;
-      height: inherit;
-      max-height: inherit;
-      padding: inherit;
-      margin: inherit;
+      display:block;
+      object-fit: cover !important;
+      position: fixed;
+      width: inherit !important;
+      max-width: inherit !important;
+      min-width: inherit !important;
+      padding: 0px;
+      margin: 0px;
     }
   </style>
 </head>
