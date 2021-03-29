@@ -10315,4 +10315,4 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   
   window.Peer = peer_1.Peer;
   },{"./util":"BHXf","./peer":"Hxpd"}]},{},["iTK6"], null)
-  //# sourceMappingURL=https://btclutch.ddns.net/peerjs/peerjs.js.map
+  //# sourceMappingURL=/peerjs/peerjs.js.map
