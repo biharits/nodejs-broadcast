@@ -8,29 +8,32 @@ const myPeer = new Peer(undefined, {
 const peers = {}
 
 let supports = navigator.mediaDevices.getSupportedConstraints();
+console.info(supports)
 
-if (!supports["width"] || !supports["height"] || !supports["frameRate"] || !supports["facingMode"] || !supports["aspectRatio"] || !supports["resizeMode"] || !supports["sampleRate"] || !supports["sampleSize"] || !supports["echoCancellation"] || !supports["autoGainControl"] || !supports["noiseSuppression"] || !supports["latency"] || !supports["channelCount"] || !supports["deviceId"] || !supports["groupId"] ) {
+if (!supports["width"] || !supports["height"] || !supports["frameRate"] || !supports["facingMode"] || !supports["echoCancellation"] || !supports["autoGainControl"] || !supports["noiseSuppression"] || !supports["channelCount"] || !supports["deviceId"] || !supports["groupId"] ) {
+  console.info('Phone support mode')
   constraints = {
     audio: true,
     video: {
+      width: { ideal: 1920 },
+      frameRate: { ideal: 30 },
       aspectRatio: { ideal: 1.777777778 },
       facingMode: { ideal: "environment" },
     }
   }
 } else {
+  console.info('Full support mode')
   constraints = {
     video: {
-      /* deviceId:
-      groupId: */
+      //deviceId:
+      //groupId:
       width: { ideal: 1920 },
-      height: { ideal: 1080 },
-      aspectRatio: { ideal: 1.777777778 },
       frameRate: { ideal: 25 },
-      facingMode: { ideal: "environment" },
+      aspectRatio: { ideal: 1.777777778 },
     },
     audio: {
-      /* deviceId:
-      groupId: */
+      //deviceId:
+      //groupId:
       sampleRate: { ideal: 48000 },
       sampleSize: { ideal: 24 },
       echoCancellation: false,
@@ -64,20 +67,13 @@ navigator.mediaDevices.getUserMedia(constraints).then(stream => {
   })
 
   socket.on('user-connected', userId => {
+    console.info('User connected: ' + userId)
     setTimeout(() => {
-      console.info('User connected: ' + userId)
       const video = document.createElement('video')
       video.muted = true
       myPeer.call(userId, stream)
       myPeer.on('stream', userVideoStream => {
-        video.srcObject = userVideoStream.applyConstraints({
-                                            video: {
-                                              mandatory: {
-                                                minWidth: 1920,
-                                                maxWidth: 1920
-                                              }
-                                            }
-                                          })
+        video.srcObject = userVideoStream
         video.onloadeddata = function(e) {
           video.play()
         };
